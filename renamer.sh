@@ -1,17 +1,25 @@
 #!/usr/bin/env bash
 
-set -x
 set -e
 set -u
 
-# TODO: provide usage
-
 die() { echo "$@" 1>&2 ; exit 1; }
+
+usage() {
+    echo "usage:"
+    echo -e "\t./renamer.sh <filename>"
+}
+
+if [ "$#" -ne 1 ]; then
+    usage
+    die "Incorrect number of arguments"
+fi
 
 pdf="$1"
 
 if [ ! -f "$pdf" ]
 then
+    usage
     die "File $pdf does not exists"
 fi
 
