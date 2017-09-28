@@ -33,11 +33,11 @@ then
 fi
 
 # get title, note that xargs is used to trim
-title=$(pdfinfo "$pdf" | egrep '^Title' | sed 's/^Title:\s*//g' |  head -c 60 | xargs | sed 's/\s/-/g')
+title=$(pdfinfo "$pdf" | egrep '^Title' | sed 's/^Title:[[:space:]]*//g' |  head -c 60 | xargs | sed 's/[[:space:]]/-/g')
 die_if_empty "$title" "title"
 
 # get authors
-IFS=',' read -ra names <<< "$(pdfinfo "$pdf" | egrep '^Author:\s*' | sed 's/^Author:\s*//g')"
+IFS=',' read -ra names <<< "$(pdfinfo "$pdf" | egrep '^Author:[[:space:]]*' | sed 's/^Author:[[:space:]]*//g')"
 author=$(echo "${names[0]}" | awk '{print $NF}')
 die_if_empty "$author" "author"
 
